@@ -1,61 +1,88 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Mvc;
 using Chess.Models.Account;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Chess.Controllers
 {
 	public class AccountController : Controller
 	{
-		//private UserManager<Account> _userManager;
+		private readonly ApplicationDbContext _context;
 
-		//public AccountController(UserManager<Account> usrMngr)
-		//{
-		//	_userManager = usrMngr;
-		//}
+
+		public AccountController(ApplicationDbContext context)
+		{
+			_context = context;
+		}
 
 		public IActionResult SignIn()
 		{
 			return View("SignIn");
 		}
 
-		public void GoogleLogin()
+		[AllowAnonymous]
+		public async Task GoogleLogin()
 		{
 
-		}
+            await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            });
+        }
 
-		public ViewResult CreateAccount()
+		[AllowAnonymous]
+		public async Task<IActionResult> GoogleResponse()
 		{
 
-			return View();
+            var result = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+
+			if (result.Succeeded)
+			{
+				var claims = result.Principal.Identities.First().Claims.Select(claim => claim.Value).First();
+
+				var user = new User()
+				{
+					GoogleID = claims
+				};
+
+				return View("CreateAccount", user);
+			}
+			else
+			{
+				return View("Error");
+			}
 		}
 
-		
-		//public async Task<IActionResult> CreateAccount(User newAccount)
-		//{
-		//	if (ModelState.IsValid)
-		//	{
-		//		var acct = new Account()
-		//		{
-		//			UserName = newAccount.Name
-		//		};
 
-		//		var result = await _userManager.CreateAsync(acct);
+		public IActionResult CreateAccount(User newUser)
+		{
+				
+			_context.Database.EnsureCreated();
 
-		//		if (result.Succeeded)
-		//		{
-		//			return RedirectToAction("Index");
-		//		}
+            var acct = new Account()
+            {
+				GoogleID = newUser.GoogleID,
+                UserName = newUser.Name
+            };
 
-		//		else
-		//		{
-  //                  foreach (IdentityError error in result.Errors)
-  //                      ModelState.AddModelError("", error.Description);
-  //              }
-		//	}
+                _context.Accounts.Add(acct);
+				_context.SaveChanges();
+				return RedirectToAction("Index", "Home");
+        }
 
-		//	return View(newAccount);
-		//}
-	}
+		public async Task Login(User user)
+		{
+			
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+    }
 }
 

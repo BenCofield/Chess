@@ -1,13 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Chess.Models.Account
 {
-	public class User
+	public class User : IdentityUser
 	{
-		[Required]
-		public string Name { get; set; }
+        public string Name { get; set; }
 
+		public string GoogleID { get; set; }
 	}
 }
 

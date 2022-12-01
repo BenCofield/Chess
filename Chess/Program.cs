@@ -1,27 +1,30 @@
 ﻿using Chess.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using MySql.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionString));
 
-//builder.Services.AddDbContext<AccountDbContext>(opts =>
-//{
-//    opts.UseMySQL("Server:localhost;Database:chess;uid:root;Pwd:password;Port:3306");
-//});
-//builder.Services.AddIdentity<Account, IdentityRole>()
-//    .AddEntityFrameworkStores<AccountDbContext>()
-//    .AddDefaultTokenProviders();
-//builder.Services.AddAuthentication().AddGoogle(options =>
-//{
-//    options.ClientId = "432448924619-nhsilck3ervooa1s28dm9gfsu6bfb222.apps.googleusercontent.com";
-//    options.ClientSecret = "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";
-//});
 builder.Services.AddControllersWithViews();
+builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddAuthentication(options => 
+    {
+        options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = "432448924619-nhsilck3ervooa1s28dm9gfsu6bfb222.apps.googleusercontent.com";
+        googleOptions.ClientSecret = "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";
+        googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
+    });
 
 var app = builder.Build();
 
