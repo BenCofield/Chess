@@ -1,0 +1,29 @@
+﻿@section Styles {
+    <link rel="stylesheet" href="~/css/game.css" type="text/css" />
+}
+@section Scripts {
+    <script src="~/js/game.js" type="text/javascript"></script>
+}
+@{
+    ViewData["Title"] = "Game";
+}
+
+<section>
+
+    <h1>Chess</h1>
+
+    <div id="gameArea">
+
+    </div>
+
+    <button id="my-button" onclick="chessBoardView.UpdateView()" onload="InitBoard()">Click Me</button>
+
+    <h1>
+        Messages
+    </h1>
+
+
+    <textarea></textarea>
+
+
+</section>
