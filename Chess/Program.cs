@@ -23,7 +23,6 @@ builder.Services.AddAuthentication(options =>
     {
         googleOptions.ClientId = "432448924619-nhsilck3ervooa1s28dm9gfsu6bfb222.apps.googleusercontent.com";
         googleOptions.ClientSecret = "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";
-        googleOptions.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
     });
 
 var app = builder.Build();

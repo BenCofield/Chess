@@ -7,13 +7,13 @@
             var isAuthenticated = Context.User.Identity.IsAuthenticated;
             if(!isAuthenticated) {
                 <li>
-                    <a asp-action="SignIn" asp-controller="Account" class="btn navbar-btn">Sign In</a>
+                    <a asp-action="SignIn" asp-controller="Account" class="btn navbar-btn text-light">Sign In</a>
                 </li>
             }
             else {
                 <li>
-                    <a class="btn navbar-btn">Hello @User.Identity.Name</a>
-                    <a asp-action="Logout" asp-controller="Account" class="btn navbar-btn">Logout</a>
+                    <a class="btn navbar-btn text-light">Hello @User.Identity.Name</a>
+                    <a asp-action="Logout" asp-controller="Account" class="btn navbar-btn text-light">Logout</a>
                 </li>
             }
             }

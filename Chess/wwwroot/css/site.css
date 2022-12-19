@@ -1,10 +1,10 @@
 ﻿html {
-  font-size: 14px;
+  font-size: 28px;
 }
 
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 28px;
   }
 }
 
@@ -18,5 +18,14 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    background-image: url('/lib/img/background.jpg');
+    background-size: 100%;
+}
+
+main {
+    width: 50%;
+    height: 100%;
+    padding: 50px;
+    margin: auto;
+    border: 0;
 }

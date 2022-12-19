@@ -50,7 +50,7 @@ namespace Chess.Controllers
 			}
 			else
 			{
-				return View("Error");
+				return View("SignIn");
 			}
 		}
 
@@ -66,14 +66,14 @@ namespace Chess.Controllers
                 UserName = newUser.Name
             };
 
-                _context.Accounts.Add(acct);
-				_context.SaveChanges();
-				return RedirectToAction("Index", "Home");
+            _context.Accounts.Add(acct);
+			_context.SaveChanges();
+			return RedirectToAction("Index", "Home");
         }
 
 		public async Task Login(User user)
 		{
-			
+
         }
 
         [Authorize]
@@ -83,6 +83,10 @@ namespace Chess.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+		public IActionResult Rankings()
+		{
+			return View("Rankings");
+		}
     }
 }
 

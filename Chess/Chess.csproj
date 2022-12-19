@@ -9,6 +9,12 @@
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\img\NewFolder\**" />
+    <Content Remove="wwwroot\lib\img\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\lib\img\NewFolder\**" />
+    <None Remove="wwwroot\lib\img\NewFolder\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Views\Account\Index.cshtml.cs" />
   </ItemGroup>
   <ItemGroup>
