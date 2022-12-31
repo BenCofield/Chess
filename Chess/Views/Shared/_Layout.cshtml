@@ -4,39 +4,47 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Chess</title>
+    <link rel="icon" href="~/lib/img/icon.ico" asp-append-version="true"/>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Chess.styles.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
 </head>
+
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark box-shadow">
+        <nav class="navbar navbar-sm navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chess</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                
                 @await Html.PartialAsync("_AccountViewPartial")
             </div>
         </nav>
     </header>
-    <div>
-        <main role="main" class="pb-3 bg-dark text-light">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted text-light">
+
+    <main role="main" class="container bg-dark text-light">
+        <div class="m-2">
+            @RenderBody()
+        </div>
+    </main>
+
+
+    <footer class="footer text-muted text-light bg-dark">
         <div class="container">
-            &copy; 2022 - Chess - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Chess
         </div>
     </footer>
+
+
+    @*load scripts*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false) 
 </body>
+
+
 </html>
 

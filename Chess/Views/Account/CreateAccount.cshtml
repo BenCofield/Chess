@@ -1,13 +1,23 @@
-﻿@model Chess.Models.Account.User
+﻿
+@model Chess.Models.Account.User
+
+<h1>Register a new account: </h1>
 
 <form method="post" asp-controller="Account" asp-action="CreateAccount">
+
     <input asp-for="GoogleID" type="hidden" value="@Model.GoogleID"/>
 
-    <label asp-for="Name">
-        Enter a username:
-    </label>
-    <input type="text" name="Name" /><br />
+    <div class="mt-3 mb-3">
+        <label asp-for="Name">
+            Enter a username:
+        </label>
 
-    <input type="submit" /><br />
+        <input class="form-control" type="text" name="Name" />
+    </div>
+
+    <div class="mb-3">
+        <input type="submit" class="btn btn-outline-info" value="Create Account"/><br />
+    </div>
+
 </form>
 

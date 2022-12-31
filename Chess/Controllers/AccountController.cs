@@ -39,11 +39,11 @@ namespace Chess.Controllers
 
 			if (result.Succeeded)
 			{
-				var claims = result.Principal.Identities.First().Claims.Select(claim => claim.Value).First();
+				var claimsGoogID = result.Principal.Identities.First().Claims.Select(claim => claim.Value).First();
 
 				var user = new User()
 				{
-					GoogleID = claims
+					GoogleID = claimsGoogID
 				};
 
 				return View("CreateAccount", user);
@@ -85,7 +85,9 @@ namespace Chess.Controllers
 
 		public IActionResult Rankings()
 		{
-			return View("Rankings");
+			var acctList = _context.Accounts.OrderBy(x => x.UserName).ToList();
+
+			return View("Rankings", acctList);
 		}
     }
 }

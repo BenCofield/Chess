@@ -8,15 +8,17 @@
     ViewData["Title"] = "Game";
 }
 
-<section>
+<h1>Chess</h1>
 
-    <h1>Chess</h1>
+<section class="container d-inline-flex">
+    <div class="col">
+        <div id="gameArea" onload="StartGame()">
 
-    <div id="gameArea" onload="StartGame()">
-
+        </div>
+        <button class="btn btn-info" onclick="chessBoardView.UpdateView()">Update</button>
     </div>
 
-    <button class="btn btn-info" onclick="chessBoardView.UpdateView()">Update</button>
-
-
+    <div class="col">
+        <textarea></textarea>
+    </div>
 </section>

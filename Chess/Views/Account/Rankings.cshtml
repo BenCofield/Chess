@@ -2,11 +2,23 @@
     ViewData["Title"] = "Rankings";
 }
 
-<div id="lol" class="container m-1">
+@model List<Chess.Models.Account.Account>
+<div id="lol" class="container m-auto">
     <h1>Leaderboard</h1>
-    <table class="table-striped">
+    <table class="table table-striped table-dark">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Points</th>
+        </tr>
         @{
-
+            foreach(var entry in Model) {
+                <tr>
+                    <td>@entry.Id</td>
+                    <td>@entry.UserName</td>
+                    <td></td>
+                </tr>
+            }
         }
     </table>
 </div>
