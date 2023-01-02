@@ -85,7 +85,7 @@ namespace Chess.Controllers
 
 		public IActionResult Rankings()
 		{
-			var acctList = _context.Accounts.OrderBy(x => x.UserName).ToList();
+			var acctList = _context.Accounts.OrderBy(x => x.Id).ToList();
 
 			return View("Rankings", acctList);
 		}
