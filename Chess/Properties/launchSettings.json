@@ -6,14 +6,14 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5210"
+      "applicationUrl": "http://localhost:5000"
     },
     "https": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:7190/"
+      "applicationUrl": "https://localhost:5000/"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -26,7 +26,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:7190",
+      "applicationUrl": "http://localhost:5000",
       "sslPort": 44349
     }
   }
