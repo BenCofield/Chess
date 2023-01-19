@@ -1,18 +1,20 @@
-﻿using Chess.Models.Account;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication;
 
+using Chess.Models.Account;
+using Chess.Models;
+
+#region Builder Services
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("AzureDb");
+//Entity Framework DbContext + SQL connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDb")));
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddIdentity<User, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+//Google Authentication
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddAuthentication(options => 
     {
@@ -21,11 +23,14 @@ builder.Services.AddAuthentication(options =>
     })
     .AddGoogle(googleOptions =>
     {
-        googleOptions.ClientId = "432448924619-nhsilck3ervooa1s28dm9gfsu6bfb222.apps.googleusercontent.com";
-        googleOptions.ClientSecret = "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";
+        googleOptions.ClientId = builder.Configuration.GetValue<string>("GoogleSettings:ClientId");
+        googleOptions.ClientSecret = builder.Configuration.GetValue<string>("GoogleSettings:ClientSecret");
     });
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 var app = builder.Build();
+#endregion
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

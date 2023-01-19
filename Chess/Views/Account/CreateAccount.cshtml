@@ -1,5 +1,5 @@
 ﻿
-@model Chess.Models.Account.User
+@model Chess.Models.Account.Account
 
 <h1>Register a new account: </h1>
 
@@ -8,11 +8,11 @@
     <input asp-for="GoogleID" type="hidden" value="@Model.GoogleID"/>
 
     <div class="mt-3 mb-3">
-        <label asp-for="Name">
+        <label asp-for="UserName">
             Enter a username:
         </label>
 
-        <input class="form-control" type="text" name="Name" />
+        <input class="form-control" type="text" name="UserName" />
     </div>
 
     <div class="mb-3">

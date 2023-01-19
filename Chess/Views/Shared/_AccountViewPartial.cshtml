@@ -1,22 +1,22 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Chess.Models.Account
-
-    <div class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
+﻿
+<div class="navbar-right">
+    <ul class="nav navbar-nav navbar-right">
         @{
-            var isAuthenticated = Context.User.Identity.IsAuthenticated;
-            if(!isAuthenticated) {
+            if (Context.User.Identity.IsAuthenticated)
+            {
                 <li>
-                    <a asp-action="SignIn" asp-controller="Account" class="btn navbar-btn text-light">Sign In</a>
-                </li>
-            }
-            else {
-                <li>
-                    <a class="btn navbar-btn text-light">Hello @User.Identity.Name</a>
+                    <a class="btn navbar-btn text-light">Hello @Context.User.Identity.Name</a>
                     <a asp-action="Logout" asp-controller="Account" class="btn navbar-btn text-light">Logout</a>
                 </li>
             }
+            else
+            {
+
+                <li>
+                    <a class="btn navbar-btn text-light">Guest</a>
+                </li>
+            }
         }
-        </ul>
-    </div>
+    </ul>
+</div>
 
