@@ -12,20 +12,56 @@
 }
 
 @model Chess.Models.Account.User
-<h1>Chess</h1>
+<h1 class="m-2">Chess</h1>
 
+@*Main Section*@
 <section class="container m-2 d-inline-flex">
+
+    @*Chess Area*@
     <div class="container col-sm-6">
+
         <div id="gameArea" class="p-1" onload="StartGame()">
 
         </div>
-        <button class="btn btn-info" onclick="chessBoardView.UpdateView()">Update</button>
+
+        <button id="updateBtn" class="btn btn-info">Update</button>
     </div>
 
-    <div class="container col-sm-6">
-        <div id="chat" class="row p-1">
-            <div class="col-1">msg:</div>
-            <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
+    @*Chat Area*@
+    <div id="chat" class="container col-sm-6">
+
+        @*---hr---*@
+        <div class="row p-1">
+            <div class="col-12">
+                <hr />
+            </div>
         </div>
+
+        @*Messages*@
+        <div class="row p-1">
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
+        </div>
+
+        @*---hr---*@
+        <div class="row p-1">
+            <div class="col-12">
+                <hr />
+            </div>
+        </div>
+
+        @*Message input*@
+        <div class="row p-1">
+            <div class="col">
+                <div class="float-end">
+                    msg:
+                    <input type="text" id="messageInput" />
+                    <input type="button" id="sendButton" value="Send" />
+                </div>
+            </div>
+        </div>
+
     </div>
+
 </section>

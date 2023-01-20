@@ -2,18 +2,13 @@
   font-size: 28px;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
     background-image: url('/lib/img/background.jpg');
     background-size: 100%;
 }
 
 main {
-    height: 100%;
+    width: 50px;
     padding: 50px;
     margin: auto;
     border: 0;

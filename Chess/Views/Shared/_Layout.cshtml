@@ -11,26 +11,29 @@
     @await RenderSectionAsync("Styles", required: false)
 </head>
 
-
+@*Body*@
 <body>
+
+    @*Header*@
     <header>
-        <nav class="navbar navbar-sm navbar-dark bg-dark">
+        <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chess</a>
                 
+                @*User model partial*@
                 @await Html.PartialAsync("_AccountViewPartial", new Chess.Models.Account.User())
             </div>
         </nav>
     </header>
 
-
+    @*Main content*@
     <main role="main" class="container bg-dark text-light">
-        <div class="m-2">
+        <div class="">
             @RenderBody()
         </div>
     </main>
 
-
+    @*Footer*@
     <footer class="footer text-muted text-light bg-dark">
         <div class="container">
             &copy; 2022 - Chess
@@ -44,7 +47,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false) 
 </body>
-
 
 </html>
 

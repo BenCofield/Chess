@@ -20,8 +20,6 @@ function StartGame() {
 
 function InitBoard() {
 
-    let color = "black";
-
     //Pawns
     for (let i = 0; i < 8; i++) {
         BoardState[i][1] = new Pawn("black", i, 1);
@@ -233,4 +231,4 @@ function clickAction(event) {
 
 var selectedPiece = 0;
 
-StartGame();
+$(document).ready(StartGame());
