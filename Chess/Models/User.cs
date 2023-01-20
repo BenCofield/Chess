@@ -4,15 +4,9 @@ namespace Chess.Models.Account
 {
 	public class User
 	{
-		public string? UserName;
+        private static HttpContext _httpContext => new HttpContextAccessor().HttpContext;
 
-		private string? GoogleID;
-
-		public User()
-		{
-			
-			
-		}
-	}
+        public string? UserName => _httpContext.User.Claims.Where(c => c.Type == "UserName").Select(c => c.Value).SingleOrDefault();
+    }
 }
 

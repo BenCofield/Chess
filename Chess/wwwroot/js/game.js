@@ -62,7 +62,7 @@ const BoardState = [[0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0]];
 
-var chessBoardView = {
+const chessBoardView = {
 
     canvas: document.createElement("canvas"),
     begin: function () {

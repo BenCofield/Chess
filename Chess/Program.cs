@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 
 using Chess.Models.Account;
 using Chess.Models;
+using Chess.Hubs;
 
 #region Builder Services
 var builder = WebApplication.CreateBuilder(args);
@@ -27,8 +28,9 @@ builder.Services.AddAuthentication(options =>
         googleOptions.ClientSecret = builder.Configuration.GetValue<string>("GoogleSettings:ClientSecret");
     });
 
+builder.Services.AddSignalR();
+
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
 var app = builder.Build();
 #endregion
 
@@ -51,6 +53,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapHub<GameHub>("/Game");
 app.Run();
 

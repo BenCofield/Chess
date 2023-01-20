@@ -18,7 +18,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chess</a>
                 
-                @await Html.PartialAsync("_AccountViewPartial")
+                @await Html.PartialAsync("_AccountViewPartial", new Chess.Models.Account.User())
             </div>
         </nav>
     </header>

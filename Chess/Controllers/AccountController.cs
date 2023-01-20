@@ -15,7 +15,6 @@ using System.Web;
 using Chess.Models.Account;
 using Chess.Models;
 
-
 //Class: "AccountController"
 //Return account related views and execute account, authentication, and database functions
 
@@ -23,42 +22,31 @@ namespace Chess.Controllers
 {
 	public class AccountController : Controller
 	{
-		private readonly ApplicationDbContext _context;
-
-        public ClaimsPrincipal User { get { return HttpContext.User; } }
+        private readonly ApplicationDbContext _context;
 
 		public AccountController(ApplicationDbContext context)
 		{
             _context = context;
+            _context.Database.EnsureCreated();
 		}
-
 
         #region Views 
         public IActionResult SignIn()
 		{
 			return View("SignIn");
 		}
-
-        [AllowAnonymous]
-        public async Task GoogleLogin()
-        {
-            await HttpContext.ChallengeAsync("Google", new AuthenticationProperties()
-            {
-                RedirectUri = Url.Action("GoogleResponse")
-            });
-        }
-
+        
         [AllowAnonymous]
         public async Task<IActionResult> GoogleResponse()
         {
 
-            var result = await HttpContext.AuthenticateAsync("Google");
+            var result = await this.HttpContext.AuthenticateAsync("Google");
 
             if (result.Succeeded)
             {
                 var claimsGoogleID = result.Principal.Identities.First().Claims.Select(claim => claim.Value).First();
 
-                var acct = _context.Accounts.First(u => u.GoogleID == claimsGoogleID);
+                var acct = _context.Accounts.SingleOrDefault(u => u.GoogleID == claimsGoogleID);
 
                 if (acct == null)
                 {
@@ -94,46 +82,49 @@ namespace Chess.Controllers
         #endregion
 
 
-        #region HttpContext User
+        #region User login and logout
+        [AllowAnonymous]
+        public async Task GoogleLogin()
+        {
+            await this.HttpContext.ChallengeAsync("Google", new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            });
+        }
+
         [Authorize]
 		private async Task LoginAsync(Account user)
 		{
-            var claims = new ClaimsIdentity(new[]
+            var identity = new ClaimsIdentity(new[]
             {
                 new Claim("UserName", user.UserName),
-                new Claim("GoogleId", user.GoogleID)
-            }, "Custom");
+                new Claim("GoogleID", user.GoogleID)
+            }, "Google");
 
-            var princpal = new ClaimsPrincipal(claims);
-            HttpContext.User = princpal;
+            var principal = new ClaimsPrincipal(identity);
 
-            var u = Request.HttpContext.User;
+            HttpContext.User = principal;
         }
 
         [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToPage("Index");
         }
         #endregion
 
 
-        #region Chess Database Operations
+        #region Database Operations
         [Authorize]
-        public async Task<IActionResult> CreateAccount(Account newUser)
+        public async Task CreateAccount(Account newUser)
         {
-            
-            await LoginAsync(newUser);
-            _context.Database.EnsureCreated();
             _context.Accounts.Add(newUser);
             _context.SaveChanges();
-
-            return RedirectToAction("Index", "Home");
         }
 
         [Authorize]
-        public async void UpdateAccount(Account acct)
+        public async Task UpdateAccount(Account acct)
         {
             _context.Accounts.Update(acct);
             await LoginAsync(acct);

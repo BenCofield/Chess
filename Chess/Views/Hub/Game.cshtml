@@ -1,24 +1,31 @@
-﻿@section Styles {
-    <link rel="stylesheet" href="~/css/game.css" type="text/css" />
-}
-@section Scripts {
-    <script src="~/js/game.js" type="text/javascript"></script>
-}
-@{
+﻿@{
     ViewData["Title"] = "Game";
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/game.css" type="text/css" />
+}
+@section Scripts {
+    <script src="~/js/game.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+}
+
+@model Chess.Models.Account.User
 <h1>Chess</h1>
 
-<section class="container d-inline-flex">
-    <div class="col">
-        <div id="gameArea" onload="StartGame()">
+<section class="container m-2 d-inline-flex">
+    <div class="container col-sm-6">
+        <div id="gameArea" class="p-1" onload="StartGame()">
 
         </div>
         <button class="btn btn-info" onclick="chessBoardView.UpdateView()">Update</button>
     </div>
 
-    <div class="col">
-        <textarea></textarea>
+    <div class="container col-sm-6">
+        <div id="chat" class="row p-1">
+            <div class="col-1">msg:</div>
+            <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
+        </div>
     </div>
 </section>

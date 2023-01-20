@@ -2,7 +2,6 @@
 
 namespace Chess.Models.Account
 {
-
     /*
      * Class: Account
      */
@@ -12,7 +11,6 @@ namespace Chess.Models.Account
         public string UserName { get; set; }
         public string GoogleID { get; set; }
     }
-
 
     /*
      * Class: ApplicationDbContext
@@ -35,8 +33,6 @@ namespace Chess.Models.Account
                 entity.Property(x => x.GoogleID).IsRequired(); 
             });
         }
-
-        
     }
 }
 
