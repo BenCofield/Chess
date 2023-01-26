@@ -17,7 +17,7 @@
     @*Header*@
     <header>
         <nav class="navbar navbar-dark bg-dark">
-            <div class="container-fluid">
+            <div class="container-fluid w-100">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chess</a>
                 
                 @*User model partial*@
@@ -27,14 +27,14 @@
     </header>
 
     @*Main content*@
-    <main role="main" class="container bg-dark text-light">
+    <main class="container bg-dark text-light">
         <div class="">
             @RenderBody()
         </div>
     </main>
 
     @*Footer*@
-    <footer class="footer text-muted text-light bg-dark">
+    <footer class="footer text-muted text-light bg-dark position-fixed">
         <div class="container">
             &copy; 2022 - Chess
         </div>

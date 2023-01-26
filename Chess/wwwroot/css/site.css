@@ -2,14 +2,19 @@
   font-size: 28px;
 }
 
+
+
 body {
     background-image: url('/lib/img/background.jpg');
-    background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-height: 100vh;
 }
 
 main {
-    width: 50px;
     padding: 50px;
     margin: auto;
     border: 0;
+    z-index: 0;
 }

@@ -55,4 +55,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapHub<GameHub>("/Game");
 app.Run();
-

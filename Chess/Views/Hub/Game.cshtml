@@ -15,7 +15,7 @@
 <h1 class="m-2">Chess</h1>
 
 @*Main Section*@
-<section class="container m-2 d-inline-flex">
+<section class="container p-1 d-inline-flex">
 
     @*Chess Area*@
     <div class="container col-sm-6">
@@ -27,41 +27,44 @@
         <button id="updateBtn" class="btn btn-info">Update</button>
     </div>
 
+
+
     @*Chat Area*@
-    <div id="chat" class="container col-sm-6">
+    <div id="chat" class="container col-sm-6 p-1">
 
         @*---hr---*@
-        <div class="row p-1">
-            <div class="col-12">
+        <div class="row">
+            <div class="col">
                 <hr />
             </div>
         </div>
 
         @*Messages*@
-        <div class="row p-1">
+        <div class="row p-1 message-list">
             <div class="col-6">
                 <ul id="messagesList"></ul>
             </div>
         </div>
 
         @*---hr---*@
-        <div class="row p-1">
-            <div class="col-12">
+        <div class="row">
+            <div class="col">
                 <hr />
             </div>
         </div>
 
         @*Message input*@
-        <div class="row p-1">
-            <div class="col">
-                <div class="float-end">
-                    msg:
-                    <input type="text" id="messageInput" />
-                    <input type="button" id="sendButton" value="Send" />
-                </div>
+        <div class="row message-input">
+
+            <div class="d-flex col">
+                <label/> msg:
+                <input  type="text" id="messageInput" />
+                <input  type="button" id="sendButton" value="Send" />
             </div>
+
         </div>
 
     </div>
+    @*End Chat Area*@
 
 </section>

@@ -2,31 +2,23 @@
 
 namespace Chess.Hubs
 {
-    public class Move
-    {
-        public struct Piece
-        {
-            public int x { get; set; }
-            public int y { get; set; }
-        }
-        
-        public struct Space
-        {
-            public int x { get; set; }
-            public int y { get; set; }
-        }
-    }
 
     public class GameHub : Hub
 	{
-        public async Task SendMessage(string message)
+
+        public async Task SendMessage(string user, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", message);
+            await Clients.User(user).SendAsync("ReceiveMessage", user, message);
         }
 
-        public async Task SendMove(Move move)
+        public async Task SendMove(string user, object piece, object space)
         {
-            await Clients.All.SendAsync("ReceiveMove", move);
+            await Clients.User(user).SendAsync("ReceiveMove", piece, space);
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            return base.OnConnectedAsync();
         }
     }
 }
