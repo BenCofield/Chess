@@ -1,35 +1,33 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication;
-
 using Chess.Models.Account;
-using Chess.Models;
 using Chess.Hubs;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Diagnostics;
+using Azure.Core;
 
 #region Builder Services
 var builder = WebApplication.CreateBuilder(args);
 
 //Entity Framework DbContext + SQL connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AzureDb")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DockerMSSQL")));
 
-//Google Authentication
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddAuthentication(options => 
-    {
-        options.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-    })
-    .AddGoogle(googleOptions =>
+builder.Services.AddAuthentication("Cookies")
+    .AddGoogle("Google", googleOptions =>
     {
         googleOptions.ClientId = builder.Configuration.GetValue<string>("GoogleSettings:ClientId");
         googleOptions.ClientSecret = builder.Configuration.GetValue<string>("GoogleSettings:ClientSecret");
+    })
+    .AddCookie("Cookies", options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+        options.SlidingExpiration = true;
     });
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSignalR();
-
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
 #endregion
@@ -41,6 +39,12 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+//Database Services
+using (var scope = app.Services.CreateScope())
+    using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
+        context.Database.EnsureCreated();
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -54,4 +58,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapHub<GameHub>("/Game");
+app.MapHub<LobbyHub>("/Lobby");
 app.Run();

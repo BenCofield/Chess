@@ -2,8 +2,6 @@
   font-size: 28px;
 }
 
-
-
 body {
     background-image: url('/lib/img/background.jpg');
     background-size: cover;
@@ -13,8 +11,20 @@ body {
 }
 
 main {
-    padding: 50px;
     margin: auto;
-    border: 0;
-    z-index: 0;
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.homebuttons {
+    justify-content: center;
+    display: block;
+}
+
+.homebutton {
+    margin: 25px;
+    display: block;
+    width: 100%;
 }

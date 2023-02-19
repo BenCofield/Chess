@@ -1,12 +1,10 @@
-﻿@model Chess.Models.Account.User
-
-<div class="navbar-right">
+﻿<div class="navbar-right">
     <ul class="nav navbar-nav navbar-right">
         @{
-            if (Context.User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 <li>
-                    <a class="btn navbar-btn text-light">Hello @Model.UserName</a>
+                    <a class="btn navbar-btn text-light">Hello @User.Identity.Name</a>
                     <a asp-action="Logout" asp-controller="Account" class="btn navbar-btn text-light">Logout</a>
                 </li>
             }

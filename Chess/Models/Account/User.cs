@@ -1,14 +1,19 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Chess.Models.Account
 {
 	public class User
 	{
-        private static HttpContext _httpContext => new HttpContextAccessor().HttpContext;
+        private readonly HttpContext HttpContext;
 
-        public string? UserName => _httpContext.User.Claims.Where(c => c.Type == "UserName")
+        public string? UserName => HttpContext.User.Claims.Where(c => c.Type == "UserName")
                                         .Select(c => c.Value)
                                         .SingleOrDefault();
+        public User()
+        {
+            HttpContext = new HttpContextAccessor().HttpContext;
+        }
     }
 }
 

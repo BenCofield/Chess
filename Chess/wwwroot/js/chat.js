@@ -6,7 +6,6 @@ connection.start().catch(function (err) {
     return console.error(err.toString());
 });
 
-
 connection.on("ReceiveMessage", function (message) {
     var li = document.createElement('li').setAttribute('class', 'message');
     $('li').addClass('message');

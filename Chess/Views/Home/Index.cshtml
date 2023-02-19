@@ -2,8 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="home-menu" class="d-grid">
-        <a class="btn btn-outline-info btn-block" asp-controller="Hub" asp-action="Game">Play Match</a>
-        <a class="btn btn-outline-info btn-block" asp-controller="Account" asp-action="Rankings">Rankings</a>
-        <a class="btn btn-outline-info btn-block" asp-controller="Account" asp-action="SignIn">Sign In</a>
+<div class="homebuttons">
+    <a class="btn btn-outline-info btn-block homebutton" asp-controller="Hub" asp-action="Game">Play Match</a>
+    <a class="btn btn-outline-info btn-block homebutton" asp-controller="Account" asp-action="Rankings">Rankings</a>
+    <a class="btn btn-outline-info btn-block homebutton" asp-controller="Account" asp-action="SignIn">Sign In</a>
 </div>
+

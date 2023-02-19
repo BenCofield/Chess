@@ -21,16 +21,14 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chess</a>
                 
                 @*User model partial*@
-                @await Html.PartialAsync("_AccountViewPartial", new Chess.Models.Account.User())
+                @await Html.PartialAsync("_AccountViewPartial")
             </div>
         </nav>
     </header>
 
     @*Main content*@
-    <main class="container bg-dark text-light">
-        <div class="">
+    <main class="bg-dark text-light w-50">
             @RenderBody()
-        </div>
     </main>
 
     @*Footer*@

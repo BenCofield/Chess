@@ -1,12 +1,21 @@
-﻿using System;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor;
+using Chess.Models.Account;
+using Microsoft.AspNetCore.SignalR;
+using Chess.Hubs;
 
 namespace Chess.Controllers
 {
-	public class HubController : Controller
+	public class LobbyController : Controller
 	{
-		public IActionResult Game()
+		private readonly IHubContext<LobbyHub> _hubContext;
+
+		public LobbyController(IHubContext<LobbyHub> hubContext)
+		{
+			_hubContext = hubContext;
+		}
+
+		public IActionResult Lobby()
 		{
 			return View();
 		}
