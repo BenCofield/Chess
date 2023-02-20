@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Diagnostics;
 using Azure.Core;
+using Microsoft.AspNetCore.ResponseCompression;
 
 #region Builder Services
 var builder = WebApplication.CreateBuilder(args);
 
 //Entity Framework DbContext + SQL connection
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DockerMSSQL")));
+    options.UseMySQL(builder.Configuration.GetConnectionString("LocalMySQL")));
 
 builder.Services.AddAuthentication("Cookies")
     .AddGoogle("Google", googleOptions =>
@@ -26,9 +27,15 @@ builder.Services.AddAuthentication("Cookies")
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
         options.SlidingExpiration = true;
     });
-builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddServerSideBlazor();
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 var app = builder.Build();
 #endregion
 
@@ -45,7 +52,6 @@ using (var scope = app.Services.CreateScope())
     using (var context = scope.ServiceProvider.GetService<ApplicationDbContext>())
         context.Database.EnsureCreated();
 
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -57,6 +63,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapBlazorHub();
 app.MapHub<GameHub>("/Game");
-app.MapHub<LobbyHub>("/Lobby");
+app.MapHub<MatchHub>("/Lobby");
 app.Run();

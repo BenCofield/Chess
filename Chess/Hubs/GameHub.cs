@@ -3,11 +3,6 @@
 namespace Chess.Hubs
 {
 
-    public static class GameHandler
-    {
-
-    }
-
     public class GameHub : Hub
 	{
         public async Task SendMessage(string user, string message)
