@@ -1,6 +1,9 @@
-﻿namespace Chess.Components
+﻿using Microsoft.AspNetCore.Components;
+
+namespace Chess.Components
 {
-    public class MatchComponent
+    public class MatchComponent : ComponentBase
     {
+
     }
 }

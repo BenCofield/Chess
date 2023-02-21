@@ -19,7 +19,6 @@ namespace Chess.Controllers
 					new Claim(ClaimTypes.Name, $"guest{RNG.GetRandomNumber()}")
 				});
                 HttpContext.User = new ClaimsPrincipal(identity);
-				Console.WriteLine(HttpContext.User.Identity.Name);
             }
 			return View("Lobby");
 		}

@@ -28,6 +28,7 @@ builder.Services.AddAuthentication("Cookies")
         options.SlidingExpiration = true;
     });
 
+builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
@@ -40,6 +41,7 @@ var app = builder.Build();
 #endregion
 
 // Configure the HTTP request pipeline.
+app.UseResponseCompression();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -64,6 +66,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapBlazorHub();
-app.MapHub<GameHub>("/Game");
 app.MapHub<MatchHub>("/Lobby");
 app.Run();

@@ -1,5 +1,71 @@
-﻿<h3>Game</h3>
+﻿@page "/Game"
+@inherits MatchComponent
+
+
+@*Main Section*@
+<section class="container p-1 d-inline-flex">
+    <div id="chess" class="container col-sm-8 p-1">
+        <div>
+            <h3>"PlayerBlack"</h3>
+            <ul class="captured-pieces">
+            </ul>
+        </div>
+        
+        <table id="boardView">
+        </table>
+
+        <ul class="captured-pieces">
+
+        </ul>
+        <h3>
+            "PlayerWhite"
+        </h3>
+    </div>
+
+    @*Chat Area*@
+    <div id="chat" class="container col-sm-4 p-1">
+
+        @*---hr---*@
+        <div class="row">
+            <div class="col">
+                <hr />
+            </div>
+        </div>
+
+        @*Messages*@
+        <div class="row p-1 message-list">
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
+        </div>
+
+        @*---hr---*@
+        <div class="row">
+            <div class="col">
+                <hr />
+            </div>
+        </div>
+
+        @*Message input*@
+        <div class="row message-input">
+
+            <div class="d-flex col">
+                <label/> msg:
+                <input  type="text" id="messageInput" />
+                <input  type="button" id="sendButton" value="Send" />
+            </div>
+
+        </div>
+
+    </div>
+    @*End Chat Area*@
+
+</section>
 
 @code {
+
+}
+
+@functions {
 
 }

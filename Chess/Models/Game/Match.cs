@@ -10,14 +10,20 @@ namespace Chess.Models.Game
 
         public Player(int id, string userName)
         {
-            ConnectionId= id;
-            UserName= userName;
+            ConnectionId = id;
+            UserName = userName;
         }
     }
+
     public class Match
     {
         public string randomUrl { get; set; }
 
-        public 
+        public Player PlayerWhite { get; set; }
+        public Player PlayerBlack { get; set; }
+
+        public IBoard BoardState { get; set; }
+
+
     }
 }

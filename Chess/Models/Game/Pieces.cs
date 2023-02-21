@@ -1,6 +1,7 @@
 ﻿namespace Chess.Models.Game
 {
-    public class Pieces
+    public class Piece
     {
+
     }
 }
