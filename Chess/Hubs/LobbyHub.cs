@@ -76,6 +76,8 @@ namespace Chess.Hubs
 
     public class MatchHub : Hub
 	{
+        public const string HubUrl = "/Game";
+
         public async override Task OnConnectedAsync()
         {
             await UserHandler.AddToLobby(Context.ConnectionId);

@@ -15,20 +15,12 @@
 <h1 class="m-2">Chess</h1>
 
 
-
-
 @*Main Section*@
 <section class="container p-1 d-inline-flex">
 
-    @*Chess Area*@
-    <div class="container col-sm-6">
-
-        <div id="gameArea" class="p-1" onload="StartGame()">
-
-        </div>
-
-        <button id="updateBtn" class="btn btn-info">Update</button>
-    </div>
+    @*Chess Blazor Component*@
+    @using Chess.Components
+    <component type="typeof(MatchComponent)" render-mode="ServerPrerendered" />
 
 
 

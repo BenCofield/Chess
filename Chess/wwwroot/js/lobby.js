@@ -1,7 +1,7 @@
 ﻿
 
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/Hub/Lobby").build();
 
 connection.start().catch(function (err) {
     return console.error(err.toString());

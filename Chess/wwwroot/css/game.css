@@ -29,3 +29,13 @@ message-list {
     border: 0px;
     border-radius: 5px;
 }
+
+#board-view {
+    border: 4px solid #000000;
+    background-image: url('~/lib/img/board.png');
+    background-size: 512px 512px;
+
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+}
