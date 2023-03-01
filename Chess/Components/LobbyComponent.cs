@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
-
-namespace Chess.Components
+﻿namespace Chess.Components
 {
-    public class LobbyComponent : ComponentBase
+    public class LobbyComponent : ViewModelComponentBase
     {
 
     }

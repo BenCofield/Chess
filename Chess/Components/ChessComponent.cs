@@ -2,7 +2,7 @@
 
 namespace Chess.Components
 {
-    public class MatchComponent : ComponentBase
+    public class ChessComponent : ViewModelComponentBase
     {
 
     }

@@ -1,11 +1,41 @@
-﻿@page "/Lobby"
-@inherits LobbyComponent
+﻿@implements IDisposable
 
-<h1>Lobby</h1>
-<p>
-    Waiting for match
-</p>
+
+<div class="container m-auto">
+    <h1>Lobby</h1>
+    <div class="container justify-content-center">
+        <p>
+            Waiting for match...
+        </p>
+        <p>
+            Time Elapsed: @time
+        </p>
+    </div>
+    
+</div>
 
 @code {
+    private Timer timer;
 
+    private int time = 0;
+
+    protected override void OnInitialized()
+    {
+        timer = new Timer(async _ =>
+        {
+            await OnAddSecond();
+            await InvokeAsync(StateHasChanged);
+        }, null, 0, 1000);
+        
+    }
+
+    private async Task OnAddSecond()
+    {
+        time += 1;
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
 }

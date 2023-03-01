@@ -1,27 +1,11 @@
-﻿using System.Drawing;
-
+﻿
 namespace Chess.Models.Game
 {
-
-    public struct Space
+    
+    public class Board
     {
-        public Space()
-        {
-        }
+        public Piece[][] BoardState { get; set; }
 
-        public Piece piece { get; set; } = null;
-    }
-
-    public interface IBoard
-    {
-        public IBoard MovePiece();
-    }
-
-    public class Board : IBoard
-    {
-        public IBoard MovePiece()
-        {
-
-        }
+        
     }
 }
