@@ -1,4 +1,5 @@
 ﻿@implements IDisposable
+@inherits LobbyComponent
 
 
 <div class="container m-auto">
@@ -13,29 +14,3 @@
     </div>
     
 </div>
-
-@code {
-    private Timer timer;
-
-    private int time = 0;
-
-    protected override void OnInitialized()
-    {
-        timer = new Timer(async _ =>
-        {
-            await OnAddSecond();
-            await InvokeAsync(StateHasChanged);
-        }, null, 0, 1000);
-        
-    }
-
-    private async Task OnAddSecond()
-    {
-        time += 1;
-    }
-
-    public void Dispose()
-    {
-        timer?.Dispose();
-    }
-}

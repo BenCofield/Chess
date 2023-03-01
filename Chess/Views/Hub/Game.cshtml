@@ -17,48 +17,8 @@
 @*Main Section*@
 <section class="container p-1 d-inline-flex">
 
-    @*Chess Blazor Component*@
+    @*chess and chat components*@
     @using Chess.Components
     <component type="typeof(Board)" render-mode="ServerPrerendered" />
-
-
-
-    @*Chat Area*@
-    <div id="chat" class="container col-sm-6 p-1">
-
-        @*---hr---*@
-        <div class="row">
-            <div class="col">
-                <hr />
-            </div>
-        </div>
-
-        @*Messages*@
-        <div class="row p-1 message-list">
-            <div class="col-6">
-                <ul id="messagesList"></ul>
-            </div>
-        </div>
-
-        @*---hr---*@
-        <div class="row">
-            <div class="col">
-                <hr />
-            </div>
-        </div>
-
-        @*Message input*@
-        <div class="row message-input">
-
-            <div class="d-flex col">
-                <label/> msg:
-                <input  type="text" id="messageInput" />
-                <input  type="button" id="sendButton" value="Send" />
-            </div>
-
-        </div>
-
-    </div>
-    @*End Chat Area*@
-
+    <component type="typeof(Chat)" render-mode="ServerPrerendered" />
 </section>

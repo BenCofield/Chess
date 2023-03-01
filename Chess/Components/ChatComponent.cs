@@ -2,8 +2,7 @@
 
 namespace Chess.Components
 {
-    public class ChessComponent : ComponentBase
+    public class ChatComponent : ComponentBase
     {
-
     }
 }
