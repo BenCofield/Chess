@@ -18,7 +18,9 @@
     @*Messages*@
     <div class="row p-1 message-list">
         <div class="col-6">
-            <ul id="messagesList"></ul>
+            <ul id="messagesList">
+
+            </ul>
         </div>
     </div>
 
@@ -42,3 +44,7 @@
 
 </div>
 @*End Chat Area*@
+
+@code {
+    List<string> messages = new List<string>();
+}

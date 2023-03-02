@@ -5,22 +5,26 @@ namespace Chess.Components
     public class LobbyComponent : ComponentBase
     {
         private Timer timer;
+        private int secondsElapsed = 0;
 
-        public int time = 0;
+        public string Time 
+        {
+            get => $"{secondsElapsed / 60}:{secondsElapsed % 60}";
+        }
 
         protected override void OnInitialized()
         {
             timer = new Timer(async _ =>
             {
                 await OnAddSecond();
-                await InvokeAsync(StateHasChanged);
             }, null, 0, 1000);
 
         }
 
         private async Task OnAddSecond()
         {
-            time += 1;
+            secondsElapsed += 1;
+            await InvokeAsync(StateHasChanged);
         }
 
         public void Dispose()

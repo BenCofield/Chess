@@ -1,7 +1,6 @@
-﻿
-@section Scripts {
-    <script src="~/js/lobby.js"></script>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+﻿@{
+    ViewData["Title"] = "Lobby";
 }
 
+@*Lobby blazor component*@
 <component type="typeof(Lobby)" render-mode="ServerPrerendered"/>
