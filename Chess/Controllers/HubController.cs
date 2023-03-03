@@ -23,6 +23,11 @@ namespace Chess.Controllers
             }
 			return View("Lobby");
 		}
+
+		public IActionResult Game()
+		{
+			return View();
+		}
 	}
 }
 

@@ -7,13 +7,11 @@ namespace Chess.Models.Game
         public const string White = "white";
 
         public string Id { get; set; }
-        public Player Player1 { get; private set; }
-        public Player Player2 { get; private set; }
-        public Player CurrentPlayer { get; set; }
+        public Player Player1 { get; private set; } = new Player();
+        public Player Player2 { get; private set; } = new Player();
+        public Player CurrentPlayer { get; set; } = new Player();
 
-        public Piece[][] board { get; private set; }
         public bool InProgress { get; set; }
-
         public bool IsCheck { get; set; }
         public bool IsCheckmate { get; set; }
     }

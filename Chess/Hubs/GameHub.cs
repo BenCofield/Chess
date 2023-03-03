@@ -12,14 +12,9 @@ namespace Chess.Hubs
         Task RollCall(Player player1, Player player2);
         Task Concede();
         Task Victory(string player, Board board);
-    }
 
-    public class NameBasedUserIdProvider : IUserIdProvider
-    {
-        public virtual string GetUserId(HubConnectionContext connection)
-        {
-            return connection.User?.Identity?.Name!;
-        }
+        Task StartGame();
+        Task ReceiveMove(object fromSpace, object toSpace);
     }
 
     public class GameHub : Hub<IGameClient>
@@ -37,7 +32,10 @@ namespace Chess.Hubs
 
         public override async Task OnConnectedAsync()
         {
+            
+
             var game = _repo.Games.FirstOrDefault(g => !g.InProgress);
+            _repo.UserKey[Context.User.Identity.Name] = Context.ConnectionId;
             if (game is null)
             {
                 game = new Game();
@@ -51,17 +49,16 @@ namespace Chess.Hubs
                 game.InProgress = true;
             }
 
-            await Groups.AddToGroupAsync(Context.ConnectionId, game.Id);
+            Console.WriteLine($"Connected: {Context.ConnectionId}/{Context.User.Identity.Name}");
             await base.OnConnectedAsync();
 
             if (game.InProgress)
             {
                 RandomAssignColors(game);
-                //Todo: invoke begin
             }
         }
 
-        private async void RandomAssignColors(Game game)
+        private void RandomAssignColors(Game game)
         {
             var result = _rand.Next(2);
             if (result == 1)
@@ -76,10 +73,22 @@ namespace Chess.Hubs
                 game.Player2.Color = Game.White;
                 game.CurrentPlayer = game.Player2;
             }
+        }
+        
+        private void SendMove(string user, object fromSpace,  object toSpace)
+        {
+            var game = _repo.Games.FirstOrDefault(g => g.CurrentPlayer.Name == user);
+            if (game == null) return;
 
-            await Clients.Client(game.Player1.ConnID).Color(game.Player1.Color);
-            await Clients.Client(game.Player2.ConnID).Color(game.Player2.Color);
-            await Clients.Group(game.Id).Turn(Game.White);
+            if (game.Player1.Name == user)
+            {
+                game.CurrentPlayer = game.Player2;
+            }
+            else
+            {
+                game.CurrentPlayer = game.Player1;
+            }
+            Clients.User(game.CurrentPlayer.Name).ReceiveMove(fromSpace, toSpace);
         }
     }
 }

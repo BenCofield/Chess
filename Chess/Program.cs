@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Diagnostics;
 using Azure.Core;
 using Microsoft.AspNetCore.ResponseCompression;
+using Chess.Models.Game;
 
 #region Builder Services
 var builder = WebApplication.CreateBuilder(args);
@@ -28,9 +29,12 @@ builder.Services.AddAuthentication("Cookies")
         options.SlidingExpiration = true;
     });
 
+builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IGameRepository>(new GameRepository());
+builder.Services.AddSingleton(new Random());
 builder.Services.AddResponseCompression(opts =>
 {
     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -40,6 +44,7 @@ var app = builder.Build();
 #endregion
 
 // Configure the HTTP request pipeline.
+app.UseResponseCompression();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -64,6 +69,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapBlazorHub();
-app.MapHub<GameHub>("/Game");
-app.MapHub<MatchHub>("/Lobby");
+app.MapHub<GameHub>(GameHub.HubUrl);
 app.Run();
