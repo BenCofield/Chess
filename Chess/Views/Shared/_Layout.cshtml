@@ -24,7 +24,7 @@
         <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid w-100">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Chess</a>
-                
+
                 @*User model partial*@
                 @await Html.PartialAsync("_AccountViewPartial")
             </div>
@@ -33,7 +33,7 @@
 
     @*Main content*@
     <main class="bg-dark text-light w-50">
-            @RenderBody()
+        @RenderBody()
     </main>
 
     @*Footer*@
@@ -48,8 +48,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="_framework/blazor.server.js"></script>
-    @await RenderSectionAsync("Scripts", required: false) 
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

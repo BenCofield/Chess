@@ -2,19 +2,25 @@
 
 console.log("Script Loaded");
 
-connection.on("Start", game.StartGame(userName, oppName));
+connection.on("Start", game.Start(userName, oppName));
 
 connection.on("ReceiveMove", game.ReceiveMove(piece, space));
 
-const game = {
+const _game = ReactDom.createRoot(document.createElement('div').id("game"));
+_gameRoot.render(<GameView/>);
 
-    user,
-    opponent,
+class Controller {
+
+    user;
+    opponent;
+    currentPlayer;
+    
 
     ReceiveMove(piece, space) {
-
-        User.MovePiece(piece, space);
-    },
+        MovePiece(piece, space);
+        if (this.currentPlayer == this.user) this.currentPlayer = this.opponent;
+        else this.currentPlayer = this.user;
+    }
 
     SendMove(piece, space) {
 
@@ -22,9 +28,9 @@ const game = {
 
             return console.error(err.toString());
         });
-    },
+    }
 
-    StartGame(userName, oppName) {
+    Start(userName, oppName) {
 
         this.user = userName;
         this.opponent = oppName;
@@ -33,7 +39,7 @@ const game = {
         chessBoardView.begin();
         console.log("Started Game");
         chessBoardView.UpdateView();
-    },
+    }
 
     InvokeAction(space) {
         if (User.selectedPiece === 0) {
@@ -48,38 +54,64 @@ const game = {
 
 };
 
-const User = {
+class ChessBoard extends React.Component {
+    render() {
 
-    selectedPiece = 0,
+        const rows = [];
+        for(let i = 0; i < 8; i++) {
 
-    SelectPiece(space) {
-
-        if (Board.BoardState[space.x][space.y] === 0) return;
-
-        else {
-        selectedPiece = Board.BoardState[space.x][space.y];
-        chessBoardView.DrawRectButton(space);
-
-        selectedPiece.getPossibleMoves();
-        selectedPiece.possibleMoves.forEach(sp => chessBoardView.DrawRectButton(sp));
+            const row = [];
+            for(let j = 0; j < 8; j++) {
+                row.push(new Square(boardState[i][j]).render());
+            }
+            rows.push(<tr>{row}</tr>);
         }
-    },
 
-    MovePiece(piece, space) {
+        return (
+            <table className="board-view">
+                {rows}
+            </table>
+        );
+    }
+};
 
-        Board.BoardState[piece.x][piece.y] = 0;
-        piece.MoveSpace(space);
-        Board.BoardState[space.x][space.y] = piece;
-        this.selectedPiece = 0;
-    },
+class Square extends React.Component {
+    spaceContains;
+    constructor(boardSpace) {
+        this.spaceContains = boardSpace;
+    }
+
+    render() {
+        if (spaceContains === 0) {
+            return (<td/>);
+        }
+        return (
+            <td>
+                <img src={spaceContains.image}/>
+            </td>
+        );
+    }
 }
 
+class GameView extends React.Component {
+    boardObject;
+
+    constructor(board) {
+        this.boardObject = board;
+    }
+
+    render() {
+        <div>
+            <h4></h4>
+        </div>
+    }
+}
 
 //chess board object
 const Board = {
 
-    BlackCaptured = [],
-    WhiteCaptured = [],
+    BlackCaptured: [],
+    WhiteCaptured: [],
 
     BoardState:[[0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
@@ -367,8 +399,6 @@ class Rook extends Piece {
     }
 }
 
-
-//Class: Knight
 class Knight extends Piece {
     type = "knight";
 
@@ -412,8 +442,6 @@ class Knight extends Piece {
     }
 }
 
-
-//Class: Bishop
 class Bishop extends Piece {
     type = "bishop";
 

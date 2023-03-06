@@ -29,3 +29,21 @@ message-list {
     border: 0px;
     border-radius: 5px;
 }
+
+#board-view {
+    background-image:url("~/lib/img/board.png");
+    background-size: 512px 512px;
+    height: 512px;
+    width: 512px;
+    display: table;
+    grid-template-columns: 8(1fr);
+}
+
+.square {
+    display: table-cell;
+}
+
+.square > img {
+    height: 64px;
+    width: 64px;
+}
