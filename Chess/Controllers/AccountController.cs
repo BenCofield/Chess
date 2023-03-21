@@ -62,34 +62,29 @@ namespace Chess.Controllers
 
             var result = await HttpContext.AuthenticateAsync("Cookies");
 
-            if (result.Succeeded)
+            if (!result.Succeeded) return View("SignIn");
+            
+            var claimsGoogleID = result.Principal
+                                        .Identities
+                                        .First()
+                                        .Claims
+                                        .Select(claim => claim.Value)
+                                        .First();
+
+            var acct = _context.Accounts
+                          .SingleOrDefault(u => u.GoogleID == claimsGoogleID);
+
+            if (acct == null)
             {
-                var claimsGoogleID = result.Principal
-                                           .Identities
-                                           .First()
-                                           .Claims
-                                           .Select(claim => claim.Value)
-                                           .First();
-
-                var acct = _context.Accounts
-                                   .SingleOrDefault(u => u.GoogleID == claimsGoogleID);
-
-                if (acct == null)
+                return View("CreateAccount", new Account()
                 {
-                    return View("CreateAccount", new Account()
-                    {
-                        GoogleID = claimsGoogleID,
-                    });
-                }
-                else
-                {
-                    await Login(acct);
-                    return Redirect("/");
-                }
+                    GoogleID = claimsGoogleID,
+                });
             }
             else
             {
-                return View("SignIn");
+                await Login(acct);
+                return RedirectToAction("Index", "Home");
             }
         }
 

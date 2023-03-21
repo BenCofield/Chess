@@ -29,8 +29,6 @@ builder.Services.AddAuthentication("Cookies")
         options.SlidingExpiration = true;
     });
 
-builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IGameRepository>(new GameRepository());
@@ -68,6 +66,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapBlazorHub();
 app.MapHub<GameHub>(GameHub.HubUrl);
 app.Run();

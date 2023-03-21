@@ -1,6 +1,4 @@
 ﻿
-
-
 var connection = new signalR.HubConnectionBuilder().withUrl("/Lobby").build();
 
 connection.start().catch(function (err) {

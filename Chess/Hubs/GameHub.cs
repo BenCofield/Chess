@@ -6,14 +6,11 @@ namespace Chess.Hubs
 {
     public interface IGameClient
     {
-        Task RenderBoard(Board board);
-        Task Color(string color);
-        Task Turn(string player);
         Task RollCall(Player player1, Player player2);
-        Task Concede();
-        Task Victory(string player, Board board);
+        Task Concede(string player);
+        Task Victory(string player);
 
-        Task StartGame();
+        Task StartGame(string color, string player, string opponent);
         Task ReceiveMove(object fromSpace, object toSpace);
     }
 
@@ -32,15 +29,13 @@ namespace Chess.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            
-
             var game = _repo.Games.FirstOrDefault(g => !g.InProgress);
-            _repo.UserKey[Context.User.Identity.Name] = Context.ConnectionId;
             if (game is null)
             {
                 game = new Game();
                 game.Id = Guid.NewGuid().ToString();
                 game.Player1.ConnID = Context.ConnectionId;
+
                 _repo.Games.Add(game);
             }
             else
@@ -48,17 +43,28 @@ namespace Chess.Hubs
                 game.Player2.ConnID = Context.ConnectionId;
                 game.InProgress = true;
             }
-
-            Console.WriteLine($"Connected: {Context.ConnectionId}/{Context.User.Identity.Name}");
-            await base.OnConnectedAsync();
+            _repo.UserKey[Context.User.Identity.Name] = Context.ConnectionId;
 
             if (game.InProgress)
             {
-                RandomAssignColors(game);
+                BeginGame(game);
             }
+
+            await base.OnConnectedAsync();
         }
 
-        private void RandomAssignColors(Game game)
+        public override Task OnDisconnectedAsync(Exception? exception)
+        {
+            var name = Context.User.Identity.Name;
+            _repo.UserKey.Remove(name);
+
+            var game = _repo.Games.FirstOrDefault(g => g.Player1.Name == name || g.Player2.Name == name);
+            _repo.Games.Remove(game);
+
+            return base.OnDisconnectedAsync(exception);
+        }
+
+        private void BeginGame(Game game)
         {
             var result = _rand.Next(2);
             if (result == 1)
@@ -73,6 +79,13 @@ namespace Chess.Hubs
                 game.Player2.Color = Game.White;
                 game.CurrentPlayer = game.Player2;
             }
+
+            Clients.User(game.Player1.Name).StartGame(game.Player1.Color,
+                                                      game.Player1.Name,
+                                                      game.Player2.Name);
+            Clients.User(game.Player2.Name).StartGame(game.Player2.Color,
+                                                      game.Player2.Name,
+                                                      game.Player1.Name);
         }
         
         private void SendMove(string user, object fromSpace,  object toSpace)

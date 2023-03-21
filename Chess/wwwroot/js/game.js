@@ -14,7 +14,6 @@ class Controller {
     user;
     opponent;
     currentPlayer;
-    
 
     ReceiveMove(piece, space) {
         MovePiece(piece, space);
@@ -225,8 +224,8 @@ const chessBoardView = {
 
         this.context.fillRect((boardSpace.x * 64), (boardSpace.y * 64), 64, 64);
     }
-    
-}
+
+};
 
 
 //Base piece class

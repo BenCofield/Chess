@@ -12,7 +12,6 @@ namespace Chess.Models.Game
         public Player Player2 { get; private set; } = new Player();
         public Player CurrentPlayer { get; set; } = new Player();
 
-        public IDictionary<object, object> MovesList = new Dictionary<object, object>();
         public bool InProgress { get; set; }
         public bool IsCheck { get; set; }
         public bool IsCheckmate { get; set; }
