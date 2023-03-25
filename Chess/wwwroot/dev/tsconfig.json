@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "allowJs": true,
+    "rootDir": "./src/",
+    "outDir": "./src/",
+    "noImplicitAny": false,
+    "jsx": "react",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": [
+      "node",
+      "webpack-env",
+      "jQuery"
+    ]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

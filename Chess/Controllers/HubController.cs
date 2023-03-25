@@ -5,28 +5,26 @@ using Microsoft.AspNetCore.SignalR;
 using Chess.Hubs;
 using System.Security.Claims;
 using Chess.Models;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Chess.Controllers
 {
 	public class HubController : Controller
 	{
-        public IActionResult Lobby()
+        public async Task<IActionResult> Lobby()
 		{
 			if (!HttpContext.User.Identity.IsAuthenticated)
 			{
-                var identity = new ClaimsIdentity(new[]
+				var identity = new ClaimsIdentity(new[]
 				{
 					new Claim(ClaimTypes.Name, $"guest{RNG.GetRandomNumber()}")
 				});
-                HttpContext.User = new ClaimsPrincipal(identity);
-				Console.WriteLine(HttpContext.User.Identity.Name);
-            }
-			return View("Lobby");
-		}
+				var user = new ClaimsPrincipal(identity);
+				var property = new AuthenticationProperties { IsPersistent = true };
 
-		public IActionResult Game()
-		{
-			return View();
+                await HttpContext.SignInAsync(user, property);
+            }
+			return View("Game");
 		}
 	}
 }

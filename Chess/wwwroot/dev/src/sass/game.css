@@ -1,0 +1,39 @@
+#board-view {
+  background-image: url("../../../lib/img/board.png");
+  background-size: 512px 512px;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+#board-view .space {
+  height: 64px;
+  width: 64px;
+  padding: 0;
+  display: inline-block;
+}
+#board-view .space-highlighted {
+  height: 64px;
+  width: 64px;
+  padding: 0;
+  display: inline-block;
+  background-color: rgba(255, 255, 0, 0.605);
+}
+
+button {
+  height: inherit;
+  width: inherit;
+  border-style: none;
+  background-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+button img {
+  display: inline-block;
+  vertical-align: middle;
+  height: 95%;
+  width: 95%;
+}
+
+/*# sourceMappingURL=game.css.map */

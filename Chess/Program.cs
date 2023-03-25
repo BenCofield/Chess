@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Azure.Core;
 using Microsoft.AspNetCore.ResponseCompression;
 using Chess.Models.Game;
+using Microsoft.Extensions.Logging;
 
 #region Builder Services
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("LocalMySQL")));
 
-builder.Services.AddAuthentication("Cookies")
+builder.Services.AddAuthentication(opts => {
+    opts.DefaultScheme = "Cookies";
+    opts.RequireAuthenticatedSignIn = false;
+    })
     .AddGoogle("Google", googleOptions =>
     {
         googleOptions.ClientId = builder.Configuration.GetValue<string>("GoogleSettings:ClientId");
@@ -28,6 +32,12 @@ builder.Services.AddAuthentication("Cookies")
         options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
         options.SlidingExpiration = true;
     });
+
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
+    logging.AddDebug();
+});
 
 builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();

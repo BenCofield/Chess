@@ -6,6 +6,7 @@ namespace Chess.Hubs
 {
     public interface IGameClient
     {
+        Task JoinedLobby();
         Task RollCall(Player player1, Player player2);
         Task Concede(string player);
         Task Victory(string player);
@@ -20,15 +21,22 @@ namespace Chess.Hubs
 
         private IGameRepository _repo;
         private Random _rand;
+        private ILogger<GameHub> _logger;
 
-        public GameHub(IGameRepository repo, Random rand)
+        public GameHub(IGameRepository repo, Random rand, ILogger<GameHub> logger)
         {
+            _logger = logger;
             _repo = repo;
             _rand = rand;
         }
 
         public override async Task OnConnectedAsync()
         {
+            await base.OnConnectedAsync();
+
+            _logger.LogInformation($"User {Context.User.Identity.Name} has joined the lobby");
+            _repo.UserKey[Context.User.Identity.Name] = Context.ConnectionId;
+            await Clients.Client(Context.ConnectionId).JoinedLobby();
             var game = _repo.Games.FirstOrDefault(g => !g.InProgress);
             if (game is null)
             {
@@ -43,14 +51,11 @@ namespace Chess.Hubs
                 game.Player2.ConnID = Context.ConnectionId;
                 game.InProgress = true;
             }
-            _repo.UserKey[Context.User.Identity.Name] = Context.ConnectionId;
 
             if (game.InProgress)
             {
                 BeginGame(game);
             }
-
-            await base.OnConnectedAsync();
         }
 
         public override Task OnDisconnectedAsync(Exception? exception)

@@ -2,35 +2,24 @@
 @model Chess.Models.Account.Account
 
 @section scripts {
-    <script src="~/js/createaccount.js"></script>
+    <script src="~/js/createaccount.js" type="text/javascript"></script>
 } 
 
 <h1>Register a new account: </h1>
 
-<form name="username-input" method="post" asp-controller="Account" asp-action="CreateAccount">
+<form onsubmit="return validateForm()" name="username-input" method="post" asp-controller="Account" asp-action="CreateAccount">
 
     <input asp-for="GoogleID" type="hidden" value="@Model.GoogleID"/>
+    <label asp-for="UserName">
+        Enter a username:
+    </label>
 
-    <ul class="error-message" hidden="hidden">
-        <li>
-            <p>Must be between 1 and 20 characters</p>
-        </li>
-        <li>
-            <p>Can only contain numbers and letters</p>
-        </li>
+    <ul id="error-message" class="error-message">
     </ul>
+    
+    <input class="form-control" type="text" name="username" />
 
-    <div class="container mt-3 mb-3">
-        <label asp-for="UserName">
-            Enter a username:
-        </label>
-
-        <input class="form-control" type="text" name="username" />
-    </div>
-
-    <div class="mb-3">
-        <input onsubmit="return validateForm()" type="submit" class="btn btn-outline-info" value="Create Account"/><br />
-    </div>
-
+    <input type="submit" class="btn btn-outline-info" value="Create Account"/><br />
+    
 </form>
 

@@ -15,6 +15,10 @@
     <None Remove="wwwroot\lib\img\NewFolder\**" />
     <None Remove="Hubs\" />
     <None Remove="Models\Account\" />
+    <Content Remove="wwwroot\dev\" />
+    <Content Remove="wwwroot\dev\src\" />
+    <Content Remove="wwwroot\dev\src\sass\img\" />
+    <Content Remove="wwwroot\dev\src\chess\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\Account\Index.cshtml.cs" />
@@ -57,5 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Account\" />
+    <Folder Include="wwwroot\dev\" />
+    <Folder Include="wwwroot\dev\src\" />
+    <Folder Include="wwwroot\dev\src\sass\img\" />
+    <Folder Include="wwwroot\dev\src\chess\" />
   </ItemGroup>
 </Project>

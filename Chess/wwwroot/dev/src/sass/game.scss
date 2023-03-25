@@ -1,0 +1,54 @@
+
+$BoardLength: 512px; 
+$SpaceLength: 64px;
+$HighlightColor: rgba(255, 255, 0, 0.605);
+$BackgroundPath: '../../../lib/img/board.png';
+
+@mixin board-background {
+    background-image: url($BackgroundPath);
+    background-size: $BoardLength $BoardLength;
+}
+
+@mixin space-cell {
+    height: $SpaceLength;
+    width: $SpaceLength;
+    padding: 0;
+    display: inline-block;
+}
+
+#board-view {
+    @include board-background;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+
+    table-layout: fixed;
+    border-collapse: collapse;
+
+        
+    .space {
+        @include space-cell;
+    }
+
+    .space-highlighted {
+        @include space-cell;
+        background-color: $HighlightColor;
+    }
+
+}
+
+button {
+    height: inherit;
+    width: inherit;
+    border-style: none;
+    background-color: transparent;
+    position: relative;
+    z-index: 1;
+
+    img {
+        display: inline-block;
+        vertical-align: middle;
+        height: 95%;
+        width: 95%;
+    }
+}
