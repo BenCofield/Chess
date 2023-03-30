@@ -1,14 +1,19 @@
 ﻿import * as signalR from '@microsoft/signalr';
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useContext } from 'react';
+import { SessionContext } from './chess';
+import { ConnectionContext } from './game';
 
-export function Chat({ connection, session }: any) {
+export const Chat: FC = () => {
+
+    const connection = useContext(ConnectionContext);
+    const session = useContext(SessionContext);
     
     const [message, setMessage] = useState('');
     const [messageList, setMessageList] = useState(new Array());
 
     useEffect(() => {
         connection.on("ReceiveMessage", (message, user) => onReceiveMessage);
-    }, []);
+    });
 
     const onMessageChanged = (event) => setMessage(event.target.value);
 
@@ -33,19 +38,19 @@ export function Chat({ connection, session }: any) {
         setMessageList(messageList);
     };
 
-    const chat = messageList.map(m =>
-        <li className={(m.user === session.user) ? "sent-message" : "received-message"}>{m.message}</li>);
-
     return (
-        <div>
-            <ul>
-                {chat}
+        <div className="chat-window">
+            <ul className="message-list">
+                {
+                messageList.map(m => <li className={
+                    (m.user === session.user) ? "sent-message" : "received-message"}>{m.message}</li>)
+                }
             </ul>
             <hr/>
-            <form onSubmit={onSendMessage} className="chat-input">
-                <input name="message" onChange={onMessageChanged}/>
-                <button type="submit"></button>
-            </form>
+            <div className="chat-input">
+                <input className="message-input" name="message" onChange={onMessageChanged}/>
+                <button onClick={onSendMessage} className="submit-button" type="submit"></button>
+            </div>
         </div>
     );
 }

@@ -7,7 +7,6 @@
     "outDir": "./src/",
     "noImplicitAny": false,
     "jsx": "react",
-    "sourceMap": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

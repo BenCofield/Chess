@@ -1,0 +1,22 @@
+@use './home/home';
+@use './game/game';
+@use './create-account';
+@use './!globals' as Globals;
+html {
+  font-size: 28px; }
+
+body {
+  background-image: url("../lib/img/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh; }
+  body main {
+    margin: auto;
+    padding: 50px;
+    display: block;
+    justify-content: center;
+    align-content: center;
+    height: inherit;
+    min-width: 50%;
+    max-width: 85%; }

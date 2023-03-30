@@ -1,22 +1,25 @@
-﻿
-import './sass/game.scss';
+﻿//
+//FILE: game.tsx
+//
+//Game component rendered when match is in progress
+//
+
 import * as signalR from '@microsoft/signalr';
 import React, { FC, useState, useEffect, createContext } from 'react';
 import { Lobby } from './lobby';
-import { Chat } from './chat';
 import { Chess } from './chess';
 
-export const Game: FC = () => {
-    const connection = new signalR.HubConnectionBuilder().withUrl("/game").build();
+export const ConnectionContext = createContext();
+
+export const Game: FC = ({connection}: any) => {
 
     const [inGame, setInGame] = useState(false);
 
     const [session, setSession] = useState(null);
 
-    useEffect(() => {
-        connection.start().catch((err) => console.error(err.toString()));  
+    useEffect(() => {  
         connection.on("StartGame", (color, user, opp) => StartGame(color, user, opp));
-    }, [connection]);
+    }, []);
 
     const StartGame = (color, user, opp) => {
         let s = {
@@ -28,10 +31,9 @@ export const Game: FC = () => {
         setInGame(true);
     };
 
-    const view = (inGame === false) ? <div><Lobby /></div> : <div><Chess connection={connection} session={session}/><Chat connection={connection} session={session}/></div>;
-    return (<>
-            {view}
-        </>
+    return (<ConnectionContext.Provider className="game" value={connection}>
+            {(inGame === false) ? <Lobby /> : <Chess session={session}/>}
+        </ConnectionContext.Provider>
     );
 }
 

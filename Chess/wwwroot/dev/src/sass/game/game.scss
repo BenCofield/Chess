@@ -1,0 +1,17 @@
+@use './chat';
+@use './chess';
+
+.game {
+
+    > .chess {
+        grid-template-columns: repeat(3, 1fr);
+
+        > .board {
+            grid-column: 0 / 2;
+        }
+
+        > .chat {
+            grid-column: 2 / 1;
+        }
+    }
+}

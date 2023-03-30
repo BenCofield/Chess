@@ -1,3 +1,96 @@
+.homebuttons {
+  display: block;
+  width: 100%;
+  justify-content: center;
+}
+.homebuttons .homebutton {
+  margin-block: 20px;
+  display: block;
+  width: 100%;
+}
+
+/*
+FILE: chat.scss
+
+Styling for chat component in a match
+*/
+.chat-window {
+  position: relative;
+  z-index: 0;
+}
+.chat-window .message-list {
+  display: block;
+  width: inherit;
+  height: inherit;
+}
+.chat-window .message-list .sent-message {
+  justify-self: left;
+}
+.chat-window .message-list .received-message {
+  justify-self: right;
+}
+.chat-window .chat-input {
+  display: block;
+}
+.chat-window .chat-input .text-input {
+  display: inline;
+  border-radius: 25%;
+}
+.chat-window .chat-input .submit-button {
+  display: inline;
+}
+
+.board-view {
+  background-image: url("../lib/img/board.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 0;
+  aspect-ratio: 1/1;
+  height: 300px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.board-view .space {
+  aspect-ratio: 1/1;
+  height: 37.5px;
+  padding: 0;
+}
+.board-view .space-highlighted {
+  background-color: rgba(255, 255, 0, 0.605);
+}
+.board-view .space img {
+  display: inline-block;
+  vertical-align: middle;
+  height: 95%;
+  width: 95%;
+}
+
+.game > .chess {
+  grid-template-columns: repeat(3, 1fr);
+}
+.game > .chess > .board {
+  grid-column: 0/2;
+}
+.game > .chess > .chat {
+  grid-column: 2/1;
+}
+
+.error-message {
+  display: block;
+  color: red;
+  font-size: 16px;
+  list-style: none;
+  text-align: left;
+  margin: 0;
+}
+.error-message li {
+  text-align: left;
+  display: block;
+  width: 100%;
+  margin-block: 5px;
+}
+
 html {
   font-size: 28px;
 }
@@ -18,43 +111,6 @@ body main {
   height: inherit;
   min-width: 50%;
   max-width: 85%;
-}
-body main .homebuttons {
-  display: block;
-  width: 100%;
-  justify-content: center;
-}
-body main .homebuttons .homebutton {
-  margin-block: 20px;
-  display: block;
-  width: 100%;
-}
-body main .error-message {
-  display: block;
-  color: red;
-  font-size: 16px;
-  list-style: none;
-  text-align: left;
-  margin: 0;
-}
-body main .error-message li {
-  text-align: left;
-  display: block;
-  width: 100%;
-  margin-block: 5px;
-}
-body main #root {
-  display: grid;
-  grid-template-columns: repeat(4, 25%);
-}
-body main #root #lobby {
-  grid-column: 1/4;
-}
-body main #root #game-root {
-  grid-column: 1/3;
-}
-body main #root #chat {
-  grid-column: 4;
 }
 
 /*# sourceMappingURL=site.css.map */

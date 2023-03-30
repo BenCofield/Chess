@@ -1,0 +1,27 @@
+.board-view {
+  background-image: url("../lib/img/board.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 0;
+  aspect-ratio: 1/1;
+  height: 300px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.board-view .space {
+  aspect-ratio: 1/1;
+  height: 37.5px;
+  padding: 0;
+}
+.board-view .space-highlighted {
+  background-color: rgba(255, 255, 0, 0.605);
+}
+.board-view .space img {
+  display: inline-block;
+  vertical-align: middle;
+  height: 95%;
+  width: 95%;
+}
+
+/*# sourceMappingURL=chess.css.map */

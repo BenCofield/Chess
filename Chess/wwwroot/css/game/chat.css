@@ -1,0 +1,32 @@
+/*
+FILE: chat.scss
+
+Styling for chat component in a match
+*/
+.chat-window {
+  position: relative;
+  z-index: 0;
+}
+.chat-window .message-list {
+  display: block;
+  width: inherit;
+  height: inherit;
+}
+.chat-window .message-list .sent-message {
+  justify-self: left;
+}
+.chat-window .message-list .received-message {
+  justify-self: right;
+}
+.chat-window .chat-input {
+  display: block;
+}
+.chat-window .chat-input .text-input {
+  display: inline;
+  border-radius: 25%;
+}
+.chat-window .chat-input .submit-button {
+  display: inline;
+}
+
+/*# sourceMappingURL=chat.css.map */

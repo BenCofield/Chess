@@ -2,6 +2,9 @@ import React, { FC } from 'react';
 import { Board, Space } from './models';
 import { ChessVM } from './chess';
 
+
+//Map image paths
+//Ex. Key: 'pawnwhite' returns 'pawn_white.png'
 function importAll(r) {
     let images = {};
     r.keys().map((item, index) => {
@@ -11,14 +14,15 @@ function importAll(r) {
     return images;
 }
 
-const images = importAll(require.context('../../lib/img', false, /\.png$/));
+//Import image paths into 'images'
+const images = importAll(require.context('~lib/img', false, /\.png$/));
 
 //React component: PieceImg
 //Render piece image
 //--Parameters--
 // imgPath: path to image
 // returns: Image element of piece
-const PieceImg = ({img}: any) => {
+const PieceImg: FC = ({img}: any) => {
     return (
         <img src={images[img]}/>
     );
@@ -29,14 +33,14 @@ const PieceImg = ({img}: any) => {
 //--Parameters--
 //  piece: 2d array of spaces from chessboard model, either a piece or 0
 //  returns: Button element with either nothing or the piece image
-const Square = ({space, piece, command}: any) => {
+const Square: FC = ({space, piece, command}: any) => {
 
     const content = (piece === 0) ? undefined : <PieceImg img={piece.img}/>;
 
     return (
-        <button onClick={()=> command(space)}>
+        <td className="square" onClick={()=> command(space)}>
             {content}
-        </button>
+        </td>
     );
 }
 
@@ -46,6 +50,8 @@ const Square = ({space, piece, command}: any) => {
 //  board: Chessboard model, 2d array of 8 rows by 8 rows
 //  returns: View of board
 export const BoardView: FC = ({binding}: any) => {
+
+    //--All Render Logic--
     const rows = [];
     for (var y = 0; y < 8; y++) {
 
@@ -66,12 +72,12 @@ export const BoardView: FC = ({binding}: any) => {
                     }
                 }
 
-                if (binding.selectedPiece.position.x === thisSpace.x && binding.selectedPiece.position.y === thisSpace.y) {
+                if (binding.selectedPiece.position == thisSpace) {
                     classes = "space-highlighted";
                 }
             }
 
-            row.push(<td className={classes}><Square command={binding.SquareClick} space={thisSpace} piece={binding.board[y][x]}/></td>);
+            row.push(<Square className={classes} space={thisSpace} piece={binding.board.BoardState[y][x]} command={binding.SquareClick}/>);
         }
         rows.push(<tr>{row}</tr>);
     }
@@ -80,7 +86,7 @@ export const BoardView: FC = ({binding}: any) => {
         <div>
             <h1>Board</h1>
 
-            <table id="board-view">
+            <table className="board-view">
                 <tbody>
                     {rows}
                 </tbody>

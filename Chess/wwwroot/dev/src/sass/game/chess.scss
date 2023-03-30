@@ -1,0 +1,38 @@
+
+$HighlightColor: rgba(255, 255, 0, 0.605);
+$BackgroundPath: '../lib/img/board.png';
+$BoardLength: 300px;
+
+@mixin board-background {
+    background-image: url($BackgroundPath);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.board-view {
+        @include board-background;
+        position: relative;
+        z-index: 0;
+
+        aspect-ratio: 1 / 1;
+        height: $BoardLength;
+        table-layout: fixed;
+        border-collapse: collapse;
+            
+        .space {
+            aspect-ratio: 1 / 1;
+            height: calc($BoardLength / 8); 
+            padding: 0;
+    
+            &-highlighted {
+                background-color: $HighlightColor;
+            }
+    
+            img {
+                display: inline-block;
+                vertical-align: middle;
+                height: 95%;
+                width: 95%;
+            }
+        }
+    }

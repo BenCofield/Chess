@@ -1,7 +1,8 @@
-import React, { FC, useState, useEffect} from 'react';
+import React, { FC, useState, useEffect, useContext, createContext} from 'react';
 import { BoardView } from './views';
 import { Board, Space } from './models';
-import { Session } from './game';
+import { Session, ConnectionContext } from './game';
+import { Chat } from './chat';
 
 export class ChessVM {
     color: string;
@@ -46,31 +47,34 @@ export class ChessVM {
 }
 
 interface ChessProps {
-    connnection: signalR.HubConnection;
     session: Session;
 }
 
-export const Chess: FC<ChessProps> = ({ connection, session }) => {
+export const SessionContext = createContext();
 
-    const [vm, setVm] = useState(() => new ChessVM(session.color));
+export const Chess: FC<ChessProps> = ({ session }) => {
+
+    const connection = useContext(ConnectionContext);
+    const [vm, set] = useState(() => new ChessVM(session.color));
     
     useEffect(() => {
-        vm.Start();
+        set((vm) => {vm.Start(); return vm;});
         connection.on("ReceiveMove",
-            (fromSpace, toSpace) => ReceiveMove(fromSpace, toSpace));
+            (fromSpace, toSpace) => onReceiveMove(fromSpace, toSpace));
     }, []);
 
-    const ReceiveMove = (fromSpace, toSpace) => {
+    const onReceiveMove = (fromSpace, toSpace) => {
         vm.ReceiveMove(fromSpace, toSpace);
-        setVm(vm);
     };
 
-    const ClientClick = (square) => {
+    const onClientClick = (square) => {
         vm.SquareClick(square);
-        setVm(vm);
     };
 
     return (
-        <BoardView binding={vm} command={ClientClick}/>
+        <SessionContext.Provider className="chess" value={session}>
+            <BoardView className="board" binding={vm} command={onClientClick}/>
+            <Chat className="chat"/>
+        </SessionContext.Provider>
     );
 }

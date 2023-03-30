@@ -4,7 +4,8 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "node ./node_modules/webpack/bin/webpack.js --config ./webpack.config.js"
+    "build": "node ./node_modules/webpack/bin/webpack.js --config ./webpack.config.js",
+    "sass": "node-sass src/sass/site.scss ../css/site.bundle.css"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +15,6 @@
     "file-loader": "^6.2.0",
     "jquery": "^3.6.4",
     "node-sass": "^8.0.0",
-    "signalr": "^2.4.3",
     "webpack": "^5.76.2"
   },
   "devDependencies": {

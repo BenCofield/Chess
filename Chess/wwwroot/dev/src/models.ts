@@ -35,6 +35,14 @@ export class Board {
         return 0;
     }
 
+    Map() {
+        this.BoardState.forEach(row => {
+            return row.map((column, index) => {
+                return column[index];
+            });
+        });
+    }
+
     InitBoard() {
 
         //Pawns
